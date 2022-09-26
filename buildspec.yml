@@ -21,15 +21,14 @@ phases:
             - echo Building the Docker images ...
             - docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) $REPOSITORY_URI
             - docker build -t $REPOSITORY_URI:latest .
-            - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+            - docker tag $REPOSITORY_URI:latest
     post_build:
         commands:
             - echo Build completed on 'date'
             - echo Pushing Docker images...
             - docker push $REPOSITORY_URI:latest
-            - docker push $REPOSITORY_URI:$IMAGE_TAG
             - echo Writing image definitions file ...
-            - printf '[{"name":"mvn-app","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+            - printf '[{"name":"mvn-app","imageUri":"%s"}]' $REPOSITORY_URI:latest > imagedefinitions.json
             - cat imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
