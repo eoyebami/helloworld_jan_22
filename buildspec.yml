@@ -12,7 +12,7 @@ phases:
             - echo Logging in to the Amazon ECR ...
             - aws --version
             - REPOSITORY_URI=738921266859.dkr.ecr.us-east-1.amazonaws.com/mavenpipeline
-            - IMAGE_TAG=build-${echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}'}
+            - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
     build:
         commands:
             - echo Build started on 'date'
