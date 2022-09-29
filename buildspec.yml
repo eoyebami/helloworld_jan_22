@@ -20,8 +20,8 @@ phases:
             - mvn clean install package
             - echo Building the Docker images ...
             - docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) $REPOSITORY_URI
-            - docker build -t mavenpipeline:$IMAGE_TAG .
-            - docker tag mavenpipeline:$IMAGE_TAG $REPOSITORY_URI:latest
+            - docker build -t mavenpipeline.
+            - docker tag mavenpipeline:latest $REPOSITORY_URI:latest
     post_build:
         commands:
             - echo Build completed on 'date'
