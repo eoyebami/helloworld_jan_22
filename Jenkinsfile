@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    tool { 
-      name: 'M2_HOME', type: 'maven'
-    }
+    tools {
+  maven 'M2_HOME'
+}
      stages{
       stage('Git clone'){
        steps {
