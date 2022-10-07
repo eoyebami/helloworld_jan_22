@@ -11,7 +11,7 @@ pipeline {
     }
       stage('Maven clean, build, package'){
         steps {
-          sh 'mvn clean build package'
+          sh 'mvn clean install package'
         }
       }
       stage('Nexus Artifactory Uploader'){
