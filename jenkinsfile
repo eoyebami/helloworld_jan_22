@@ -13,16 +13,12 @@ pipeline {
      stages{
       stage('Git clone'){
        steps {
-         git branch: 'dev', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
+         git branch: 'main', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
        }
     }
       stage('Maven clean, install, package'){
         steps {
-          dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
-    sh 'mvn clean install package'
-          }
-      
-        }
+          sh 'mvn clean install package'
       }
       stage('Nexus Artifactory Uploader'){
         steps {
@@ -33,7 +29,7 @@ pipeline {
           nexusArtifactUploader artifacts:
            [[artifactId: "${mavenPom.artifactId}",
             classifier: '',
-             file: "target/${mavenPom.artifactId}-${mavenPom.version}.${mavenPom.packaging}",
+             file: "/var/lib/jenkins/.m2/repository/com/example/maven-project/maven-project/1.0-SNAPSHOT/${mavenPom.artifactId}-${mavenPom.version}.${mavenPom.packaging}",
               type: "${mavenPom.packaging}"]],
                credentialsId: NEXUS_CREDENTIAL_ID ,
                 groupId: "${mavenPom.groupId}",
