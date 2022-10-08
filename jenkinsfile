@@ -46,7 +46,7 @@ pipeline {
         steps {
            
           script {
-            dir('/var/lib/jenkins/workspace/mvn-automated/server/') {
+            dir('/var/lib/jenkins/workspace/mvn-total-int-pipeline/server/') {
           def mavenPom = readMavenPom file: 'pom.xml'
 
           nexusArtifactUploader artifacts:
@@ -69,7 +69,7 @@ pipeline {
         steps {
            
           script {
-            dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
+            dir('/var/lib/jenkins/workspace/mvn-total-int-pipeline/webapp/') {
           def mavenPom = readMavenPom file: 'pom.xml'
 
           nexusArtifactUploader artifacts:
