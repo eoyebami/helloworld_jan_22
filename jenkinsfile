@@ -25,29 +25,6 @@ pipeline {
         steps {
            
           script {
-            dir('/var/lib/jenkins/workspace/mvn-automated/') {
-          def mavenPom = readMavenPom file: 'pom.xml'
-
-          nexusArtifactUploader artifacts:
-           [[artifactId: "${mavenPom.artifactId}",
-            classifier: '',
-             file: "/var/lib/jenkins/.m2/repository/com/example/maven-project/maven-project/1.0-SNAPSHOT/${mavenPom.artifactId}-${mavenPom.version}.${mavenPom.packaging}",
-              type: "${mavenPom.packaging}"]],
-               credentialsId: NEXUS_CREDENTIAL_ID ,
-                groupId: "${mavenPom.groupId}",
-                 nexusUrl: NEXUS_URL ,
-                  nexusVersion: NEXUS_VERSION ,
-                   protocol: NEXUS_PROTOCOL ,
-                    repository: NEXUS_REPOSITORY ,
-                     version: "${mavenPom.version}"
-            }
-          }
-        }
-      }
-      stage('Nexus Artifactory Uploader'){
-        steps {
-           
-          script {
             dir('/var/lib/jenkins/workspace/mvn-automated/server/') {
           def mavenPom = readMavenPom file: 'pom.xml'
 
