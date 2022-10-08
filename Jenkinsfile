@@ -26,9 +26,9 @@ pipeline {
       }
       stage('Nexus Artifactory Uploader'){
         steps {
-          script {
-            dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
+           dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
           sh 'mvn clean install package'
+          script {
           def mavenPom = readMavenPom file: 'pom.xml'    
 
           nexusArtifactUploader artifacts:
