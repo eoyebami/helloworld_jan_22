@@ -31,7 +31,6 @@ pipeline {
             dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
           def mavenPom = readMavenPom file: 'pom.xml'}
 
-        dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
           nexusArtifactUploader artifacts:
            [[artifactId: "${mavenPom.artifactId}",
             classifier: '',
@@ -51,4 +50,3 @@ pipeline {
     
     }
 
-}
