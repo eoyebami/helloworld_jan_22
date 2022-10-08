@@ -13,7 +13,7 @@ pipeline {
      stages{
       stage('Git clone'){
        steps {
-         git branch: 'dev', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
+         git branch: 'feature-2', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
        }
     }
       stage('Maven clean, install, package'){
