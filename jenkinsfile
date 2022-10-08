@@ -1,12 +1,95 @@
 pipeline {
     agent any
+    tools {
+  maven 'M2_HOME'
+}
+  environment {
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "54.172.230.136:8081"
+        NEXUS_REPOSITORY = "mvn-app"
+        NEXUS_CREDENTIAL_ID = "nexus-repo-manager"
+    }
      stages{
-      stage('Hello'){
+      stage('Git clone'){
        steps {
-         echo "Hello World"
+         git branch: 'dev', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
        }
     }
-    
-    }
+      stage('Maven clean, install, package'){
+        steps {
+          dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
+    sh 'mvn clean install package'
+          }
+      
+        }
+      }
+      stage('Nexus Artifactory Uploader'){
+        steps {
+           
+          script {
+          def mavenPom = readMavenPom file: 'pom.xml'
 
+          nexusArtifactUploader artifacts:
+           [[artifactId: "${mavenPom.artifactId}",
+            classifier: '',
+             file: "target/${mavenPom.artifactId}-${mavenPom.version}.${mavenPom.packaging}",
+              type: "${mavenPom.packaging}"]],
+               credentialsId: NEXUS_CREDENTIAL_ID ,
+                groupId: "${mavenPom.groupId}",
+                 nexusUrl: NEXUS_URL ,
+                  nexusVersion: NEXUS_VERSION ,
+                   protocol: NEXUS_PROTOCOL ,
+                    repository: NEXUS_REPOSITORY ,
+                     version: "${mavenPom.version}"
+          }
+        }
+      }
+      stage('Nexus Artifactory Uploader'){
+        steps {
+           
+          script {
+            dir('/var/lib/jenkins/workspace/mvn-automated/server/') {
+          def mavenPom = readMavenPom file: 'pom.xml'
+
+          nexusArtifactUploader artifacts:
+           [[artifactId: "${mavenPom.artifactId}",
+            classifier: '',
+             file: "target/${mavenPom.artifactId}-${mavenPom.version}.${mavenPom.packaging}",
+              type: "${mavenPom.packaging}"]],
+               credentialsId: NEXUS_CREDENTIAL_ID ,
+                groupId: "${mavenPom.groupId}",
+                 nexusUrl: NEXUS_URL ,
+                  nexusVersion: NEXUS_VERSION ,
+                   protocol: NEXUS_PROTOCOL ,
+                    repository: NEXUS_REPOSITORY ,
+                     version: "${mavenPom.version}"
+            }
+          }
+        }
+      }
+      stage('Nexus Artifactory Uploader'){
+        steps {
+           
+          script {
+            dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
+          def mavenPom = readMavenPom file: 'pom.xml'
+
+          nexusArtifactUploader artifacts:
+           [[artifactId: "${mavenPom.artifactId}",
+            classifier: '',
+             file: "target/${mavenPom.artifactId}-${mavenPom.version}.${mavenPom.packaging}",
+              type: "${mavenPom.packaging}"]],
+               credentialsId: NEXUS_CREDENTIAL_ID ,
+                groupId: "${mavenPom.groupId}",
+                 nexusUrl: NEXUS_URL ,
+                  nexusVersion: NEXUS_VERSION ,
+                   protocol: NEXUS_PROTOCOL ,
+                    repository: NEXUS_REPOSITORY ,
+                     version: "${mavenPom.version}"
+            }
+          }
+        }
+      }
+    }
 }
