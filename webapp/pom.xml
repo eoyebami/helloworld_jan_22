@@ -10,9 +10,9 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>webapp</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.2-SNAPSHOT</version>
+  <artifactId>maven-project</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
   <name>Webapp</name>
   <description>Webapp.</description>
 
