@@ -19,6 +19,7 @@ pipeline {
       stage('Maven clean, install, package'){
         steps {
           sh 'mvn clean install package'
+        }
       }
       stage('Nexus Artifactory Uploader'){
         steps {
@@ -41,7 +42,7 @@ pipeline {
           }
         }
       }
-            stage('Nexus Artifactory Uploader'){
+      stage('Nexus Artifactory Uploader'){
         steps {
            
           script {
@@ -64,7 +65,7 @@ pipeline {
           }
         }
       }
-          stage('Nexus Artifactory Uploader'){
+      stage('Nexus Artifactory Uploader'){
         steps {
            
           script {
@@ -89,4 +90,3 @@ pipeline {
       }
     }
   }
-}
