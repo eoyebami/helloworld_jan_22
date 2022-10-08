@@ -32,17 +32,17 @@ pipeline {
           def mavenPom = readMavenPom file: 'pom.xml'    
 
           nexusArtifactUploader artifacts:
-           [[artifactId: "${POM_ARTIFACTID}",
+           [[artifactId: "${mavenPom.artifactId}",
             classifier: '',
-             file: "webapp/target/${POM_ARTIFACTID}-${POM_VERSION}.${POM_PACKAGING}",
-              type: "${POM_PACKAGING}"]],
+             file: "webapp/target/${mavenPom.artifactId}-${mavenPom.version}.${mavnPom.packaging}",
+              type: "${mavnPom.packaging}"]],
                credentialsId: NEXUS_CREDENTIAL_ID ,
-                groupId: "${POM_GROUPID}",
+                groupId: "${mavenPom.groupId}",
                  nexusUrl: NEXUS_URL ,
                   nexusVersion: NEXUS_VERSION ,
                    protocol: NEXUS_PROTOCOL ,
                     repository: NEXUS_REPOSITORY ,
-                     version: "${POM_VERSION}"
+                     version: "${mavenPom.version}"
             }
           }
         }
