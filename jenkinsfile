@@ -45,7 +45,7 @@ pipeline {
           }
         }
       }
-      stage('Nexus Artifactory Uploader'){
+            stage('Nexus Artifactory Uploader'){
         steps {
            
           script {
@@ -68,7 +68,7 @@ pipeline {
           }
         }
       }
-      stage('Nexus Artifactory Uploader'){
+          stage('Nexus Artifactory Uploader'){
         steps {
            
           script {

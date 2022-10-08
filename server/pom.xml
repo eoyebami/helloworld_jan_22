@@ -12,12 +12,9 @@
 
   <artifactId>server</artifactId>
   <packaging>jar</packaging>
+  <version>0.0.1-SNAPSHOT</version>
   <name>Server</name>
   <description>Logic.</description>
-
-  <build>
-    <finalName>${project.artifactId}</finalName>
-  </build>
 
   <dependencies>
     <dependency>
