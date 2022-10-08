@@ -29,13 +29,14 @@ pipeline {
            
           script {
             dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
-          sh 'mvn clean install package'
-          def mavenPom = readMavenPom file: 'pom.xml'    
+          def mavenPom = readMavenPom file: 'pom.xml'}
 
+        
           nexusArtifactUploader artifacts:
            [[artifactId: "${mavenPom.artifactId}",
             classifier: '',
-             file: "webapp/target/${mavenPom.artifactId}-${mavenPom.version}.${mavenPom.packaging}",
+            dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
+             file: "webapp/target/${mavenPom.artifactId}-${mavenPom.version}.${mavenPom.packaging}"},
               type: "${mavenPom.packaging}"]],
                credentialsId: NEXUS_CREDENTIAL_ID ,
                 groupId: "${mavenPom.groupId}",
