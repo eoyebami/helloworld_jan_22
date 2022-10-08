@@ -25,6 +25,7 @@ pipeline {
         steps {
            
           script {
+            dir('/var/lib/jenkins/workspace/mvn-automated/') {
           def mavenPom = readMavenPom file: 'pom.xml'
 
           nexusArtifactUploader artifacts:
@@ -39,6 +40,7 @@ pipeline {
                    protocol: NEXUS_PROTOCOL ,
                     repository: NEXUS_REPOSITORY ,
                      version: "${mavenPom.version}"
+            }
           }
         }
       }
