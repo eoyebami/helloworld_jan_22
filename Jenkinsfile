@@ -29,7 +29,7 @@ pipeline {
            
           script {
             dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
-          def mavenPom = readMavenPom file: 'pom.xml'}
+          def mavenPom = readMavenPom file: 'pom.xml'
 
           nexusArtifactUploader artifacts:
            [[artifactId: "${mavenPom.artifactId}",
