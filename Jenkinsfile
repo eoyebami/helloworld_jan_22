@@ -26,6 +26,9 @@ pipeline {
       }
       stage('Nexus Artifactory Uploader'){
         steps {
+          script {
+          pom = readMavenPom file: "pom.xml";     
+
           nexusArtifactUploader artifacts:
            [[artifactId: "${POM_ARTIFACTID}",
             classifier: '',
@@ -38,6 +41,7 @@ pipeline {
                    protocol: NEXUS_PROTOCOL ,
                     repository: NEXUS_REPOSITORY ,
                      version: "${POM_VERSION}"
+          }
         }
       }
     
