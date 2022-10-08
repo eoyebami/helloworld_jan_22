@@ -6,7 +6,7 @@ pipeline {
      stages{
       stage('Git clone'){
        steps {
-         git branch: 'dev', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
+         git branch: 'feature-2', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
        }
     }
       stage('Maven clean, install, package'){
@@ -16,7 +16,7 @@ pipeline {
       }
       stage('Nexus Artifactory Uploader'){
         steps {
-          nexusArtifactUploader artifacts: [[artifactId: '${POM_ARTIFACTID}', classifier: '', file: 'target/${POM_ARTIFACTID}-${POM_VERSION}.${POM_PACKAGING}', type: '${POM_PACKAGING}']], credentialsId: 'nexus-credentials', groupId: '${POM_GROUPID}', nexusUrl: '54.172.230.136:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'mvn-app', version: '${POM_VERSION}'
+          nexusArtifactUploader artifacts: [[artifactId: '${POM_ARTIFACTID}', classifier: '', file: 'webapp/target/${POM_ARTIFACTID}-${POM_VERSION}.${POM_PACKAGING}', type: '${POM_PACKAGING}']], credentialsId: 'nexus-credentials', groupId: '${POM_GROUPID}', nexusUrl: '54.172.230.136:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'mvn-app', version: '${POM_VERSION}'
         }
       }
     
