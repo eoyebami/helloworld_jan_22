@@ -11,7 +11,10 @@ pipeline {
     }
       stage('Maven clean, install, package'){
         steps {
-          sh 'mvn clean install package'
+          dir('/var/lib/jenkins/workspace/mvn-automated/webapp/') {
+    sh 'mvn clean install package'
+          }
+      
         }
       }
       stage('Nexus Artifactory Uploader'){
