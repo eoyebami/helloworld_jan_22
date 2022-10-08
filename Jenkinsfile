@@ -9,7 +9,7 @@ pipeline {
          git branch: 'dev', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
        }
     }
-      stage('Maven clean, build, package'){
+      stage('Maven clean, install, package'){
         steps {
           sh 'mvn clean install package'
         }
