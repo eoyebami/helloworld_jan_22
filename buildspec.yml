@@ -5,6 +5,8 @@ phases:
     install:
         commands:
             - echo Installing all dependencies
+            - sudo yum install java-1.8.0-openjdk -y
+            - sudo amazon-linux-extras install java-openjdk11
             - yum install maven -y 
             - mvn --version
     pre_build:
