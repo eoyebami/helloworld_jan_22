@@ -23,7 +23,7 @@ pipeline {
       stage('Build & SonarQube Analysis'){
         agent any
         steps {
-          withSonarQubeEnv( credentialsId: 'sonar_token') {
+          withSonarQubeEnv( installationName: 'SonarQube' , credentialsId: 'sonar_token') {
             sh 'verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22'
           }
         }
