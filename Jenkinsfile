@@ -22,7 +22,7 @@ pipeline {
     }
       stage('Build & SonarQube Analysis'){
         steps {
-          withSonarQubeEnv( installationName: 'SonarServer') {
+          withSonarQubeEnv( installationName: 'SonarServer', credentialsId : 'sonar-token') {
             sh 'mvn sonar:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22 -Dsonar.java.binaries=.'
           }
         }
