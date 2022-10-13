@@ -21,7 +21,7 @@ pipeline {
        }
     }
       stage('Build & SonarQube Analysis'){
-        agent docker
+        agent any
         steps {
           withSonarQubeEnv( 'SonarServer' , credentialsId: 'sonar_token') {
             sh 'verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22'
