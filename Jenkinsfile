@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+      docker {
+        image 'maven:3.8.6-openjdk-18'
+  }
+}
     tools {
   maven 'M2_HOME'
 }
@@ -16,6 +20,14 @@ pipeline {
          git branch: 'main', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
        }
     }
+      stage('Build & SonarQube Analysis'){
+        agent docker
+        steps {
+          withSonarQubeEnv( 'SonarServer' , credentialsId: 'sonar_token') {
+            sh 'verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22'
+          }
+        }
+      }
       stage('Maven clean, install, package'){
         steps {
           sh 'mvn clean install package'
