@@ -1,7 +1,7 @@
 pipeline {
     agent {
       docker {
-        image 'maven:3.8.6-openjdk-18'
+        image 'maven:3.8.6-openjdk-11-slim'
   }
 }
     tools {
@@ -24,7 +24,7 @@ pipeline {
         agent any
         steps {
           withSonarQubeEnv( installationName: 'SonarServer' , credentialsId: 'sonar_token') {
-            sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22'
+            sh 'mvn verify sonar:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22 -Dsonar.java.binaries=.'
           }
         }
       }
