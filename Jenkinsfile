@@ -21,10 +21,9 @@ pipeline {
        }
     }
       stage('Build & SonarQube Analysis'){
-        agent any
         steps {
-          withSonarQubeEnv( installationName: 'SonarServer' , credentialsId: 'sonar_token') {
-            sh 'mvn verify sonar:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22 -Dsonar.java.binaries=.'
+          withSonarQubeEnv( installationName: 'SonarServer') {
+            sh 'mvn sonar:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22 -Dsonar.java.binaries=.'
           }
         }
       }
