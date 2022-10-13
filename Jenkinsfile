@@ -24,7 +24,7 @@ pipeline {
         agent any
         steps {
           withSonarQubeEnv( installationName: 'SonarServer' , credentialsId: 'sonar_token') {
-            sh 'verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22'
+            sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22'
           }
         }
       }
