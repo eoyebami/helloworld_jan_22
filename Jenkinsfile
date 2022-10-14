@@ -38,6 +38,7 @@ pipeline {
                   }
               }
           }
+        }  
       }  
       stage('Maven clean, install, package'){
         steps {
