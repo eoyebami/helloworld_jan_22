@@ -1,11 +1,7 @@
 pipeline {
-    agent {
-      docker {
-        image 'maven:3.8.6-openjdk-11-slim'
-  }
-}
+    agent any
     tools {
-  maven 'M2_HOME'
+    maven 'M2_HOME'
 }
   environment {
         NEXUS_VERSION = "nexus3"
