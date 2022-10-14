@@ -30,13 +30,15 @@ pipeline {
       stage("Quality Gate") {
             steps {
               echo "Checking Quality Gate .... "
-                script {
-                  timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: true
-                }
+              script {
+                timeout(time: 1, unit: 'HOURS') {
+                  def qg = waitForQualityGate()
+                  if (qg.status != 'OK') {
+                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                  }
               }
-            }
           }
+      }  
       stage('Maven clean, install, package'){
         steps {
           sh 'mvn clean install package'
