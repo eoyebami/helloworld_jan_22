@@ -25,7 +25,7 @@ pipeline {
       }
       stage("Quality Gate") {
             steps {
-              waitForQualityGate abortPipeline: true , credentialsId: 'sonar_token'
+              waitForQualityGate abortPipeline: true
         }
       }   
       stage('Maven clean, install, package'){
