@@ -1,7 +1,11 @@
 pipeline {
-    agent any
+    agent {
+      docker {
+        image 'maven:3.8.6-openjdk-11-slim'
+  }
+}
     tools {
-    maven 'M2_HOME'
+  maven 'M2_HOME'
 }
   environment {
         NEXUS_VERSION = "nexus3"
@@ -16,6 +20,7 @@ pipeline {
          git branch: 'main', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
        }
     }
+
       stage('Build & SonarQube Analysis'){
         steps {
           withSonarQubeEnv( installationName: 'SonarServer', credentialsId : 'sonar_token') {
@@ -23,11 +28,21 @@ pipeline {
           }
         }
       }
+
       stage("Quality Gate") {
             steps {
-              waitForQualityGate abortPipeline: true
-        }
-      }   
+              echo 'Checking Quality Gate ....'
+              script {
+                  timeout(time: 20, unit: 'MINUTES') {
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                      error "Pipeline stopped because of quality gate status: ${qg.status}"
+              }
+            }
+          }
+        }   
+      }
+
       stage('Maven clean, install, package'){
         steps {
           sh 'mvn clean install package'
@@ -54,6 +69,7 @@ pipeline {
           }
         }
       }
+
       stage('Server Jar Uploader'){
         steps {
            
@@ -77,6 +93,7 @@ pipeline {
           }
         }
       }
+      
       stage('Webapp war Uploader'){
         steps {
            
