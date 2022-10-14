@@ -24,7 +24,7 @@ pipeline {
       stage('Build & SonarQube Analysis'){
         steps {
           withSonarQubeEnv( installationName: 'SonarServer', credentialsId : 'sonar_token') {
-            sh 'mvn verify sonar:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22 -Dsonar.java.binaries=.'
+            sh 'mvn verify sonar:sonar'
           }
         }
       }
@@ -93,7 +93,7 @@ pipeline {
           }
         }
       }
-      
+
       stage('Webapp war Uploader'){
         steps {
            
