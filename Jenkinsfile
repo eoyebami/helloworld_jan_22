@@ -29,17 +29,9 @@ pipeline {
       }
       stage("Quality Gate") {
             steps {
-              echo "Checking Quality Gate .... "
-              script {
-                timeout(time: 1, unit: 'HOURS') {
-                  def qg = waitForQualityGate()
-                  if (qg.status != 'OK') {
-                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                  }
-              }
-          }
-        }  
-      }  
+              waitForQualityGate abortPipeline: true , credentialsId: 'sonar_token'
+        }
+      }   
       stage('Maven clean, install, package'){
         steps {
           sh 'mvn clean install package'
