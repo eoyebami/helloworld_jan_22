@@ -133,8 +133,8 @@ pipeline {
       stage('Push Docker image to ECR'){
         steps {
           script {
-          docker.withRegistry("https://"+registry,"ecr:us-east-1:"+registryCredentials) {
-            dockerimage.Push()
+            docker.withRegistry("https://"+registry,"ecr:us-east-1:"+registryCredentials){
+            dockerImage.Push()
             }
           }
         }
