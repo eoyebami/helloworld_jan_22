@@ -9,7 +9,8 @@ pipeline {
         NEXUS_URL = "54.86.23.84:8081"
         NEXUS_REPOSITORY = "mvn-app"
         NEXUS_CREDENTIAL_ID = "nexus-repo-manager"
-        registry = "738921266859.dkr.ecr.us-east-1.amazonaws.com/mavenpipeline"
+        IMAGE_REPO_NAME = "mavenpipeline"
+        REPOSITORY_URI = "738921266859.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_REPO_NAME}"
         registryCredentials = "aws_key"
         dockerimage = ""
     }
@@ -125,7 +126,8 @@ pipeline {
         steps {
           script{
             def mavenPom = readMavenPom file: 'pom.xml'
-            dockerimage = docker.build registry + ":${mavenPom.version}"
+            sh 'docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) $REPOSITORY_URI'
+            dockerimage = docker.build "${IMAGE_REPO_NAME}:${mavenPom.version}"
           }
         }
       }
@@ -133,11 +135,10 @@ pipeline {
       stage('Push Docker image to ECR'){
         steps {
           script {
-            docker.withRegistry("https://"+registry,"ecr:us-east-1:"+registryCredentials){
-            dockerimage.Push()
+            sh 'docker tag ${IMAGE_REPO_NAME}:${mavenPom.version} ${REPOSITORY_URI}:${mavenPom.version}'
+            sh 'docker push ${REPOSITORY_URI}:${mavenPom.version}'
             }
           }
         }
       }
     }
-  }
