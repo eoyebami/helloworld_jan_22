@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-      docker {
-        image 'maven:3.8.6-openjdk-11-slim'
-  }
-}
+    agent any
     tools {
   maven 'M2_HOME'
 }
@@ -13,6 +9,9 @@ pipeline {
         NEXUS_URL = "54.86.23.84:8081"
         NEXUS_REPOSITORY = "mvn-app"
         NEXUS_CREDENTIAL_ID = "nexus-repo-manager"
+        registry = "738921266859.dkr.ecr.us-east-1.amazonaws.com/mavenpipeline"
+        registryCredentials = "aws_key"
+        dockerimage = ""
     }
      stages{
       stage('Git clone'){
@@ -22,6 +21,9 @@ pipeline {
     }
 
       stage('Build & SonarQube Analysis'){
+        agent {
+      docker {image 'maven:3.8.6-openjdk-11-slim' }
+            }
         steps {
           withSonarQubeEnv( installationName: 'SonarServer', credentialsId : 'sonar_token') {
             sh 'mvn verify sonar:sonar -Dsonar.projectKey=eoyebami_helloworld_jan_22 -Dsonar.java.binaries=.'
@@ -48,6 +50,7 @@ pipeline {
           sh 'mvn clean install package'
         }
       }
+
       stage('Maven Pom Uploader'){
         steps {
            
@@ -114,6 +117,25 @@ pipeline {
                     repository: NEXUS_REPOSITORY ,
                      version: "${mavenPom.version}"
             }
+          }
+        }
+      }
+      
+      stage('Build Docker image'){
+        steps {
+          agent any
+          script{
+            def mavenPom = readMavenPom file: 'pom.xml'
+            dockerimage = docker.build registry + ":${mavenPom.version}"
+          }
+        }
+      }
+
+      stage('Push Docker image to ECR'){
+        steps {
+          agent any
+          docker.withRegistry("https://"+registry,"ecr:us-eat-1:"+registryCredentials) {
+            dockerimage.Push()
           }
         }
       }
