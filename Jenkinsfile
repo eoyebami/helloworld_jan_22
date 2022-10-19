@@ -135,8 +135,8 @@ pipeline {
       stage('Push Docker image to ECR'){
         steps {
           script {
-            sh 'docker tag ${IMAGE_REPO_NAME}:${mavenPom.version} ${REPOSITORY_URI}:${mavenPom.version}'
-            sh 'docker push ${REPOSITORY_URI}:${mavenPom.version}'
+            sh "docker tag ${IMAGE_REPO_NAME}:${mavenPom.version} ${REPOSITORY_URI}:${mavenPom.version}"
+            sh "docker push ${REPOSITORY_URI}:${mavenPom.version}"
             }
           }
         }
