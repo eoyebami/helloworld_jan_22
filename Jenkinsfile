@@ -123,7 +123,6 @@ pipeline {
 
       stage('Build Docker image'){
         steps {
-          agent any
           script{
             def mavenPom = readMavenPom file: 'pom.xml'
             dockerimage = docker.build registry + ":${mavenPom.version}"
@@ -133,7 +132,6 @@ pipeline {
 
       stage('Push Docker image to ECR'){
         steps {
-          agent any
           script {
           docker.withRegistry("https://"+registry,"ecr:us-eat-1:"+registryCredentials) {
             dockerimage.Push()
