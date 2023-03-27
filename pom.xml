@@ -24,11 +24,11 @@
   </modules>
 
   <distributionManagement>
-    <site>
-      <id>site-server</id>
-      <name>Test Project Site</name>
-      <url>file:///tmp/maven-project-site</url>
-    </site>
+    <snapshotRepository>
+      <id>Snapshot</id>
+      <name>Snapshots</name>
+      <url>http://35.174.171.7:8082/artifactory/excellent-snapshot-local</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <build>
