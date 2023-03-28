@@ -6,7 +6,7 @@ pipeline {
      stages{
       stage('Git clone'){
        steps {
-         git branch: 'main', url: 'https://github.com/eoyebami/helloworld_jan_22.git'
+         checkout scmGit(branches: [[name: '*/feature1']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/eoyebami/helloworld_jan_22.git']])
        }
     }
       stage('mvn build'){
