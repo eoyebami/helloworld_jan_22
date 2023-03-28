@@ -27,7 +27,7 @@
     <snapshotRepository>
       <id>Snapshot</id>
       <name>Snapshots</name>
-      <url>http://35.174.171.7:8082/artifactory/excellent-snapshot-local</url>
+      <url>http://35.174.171.7:8082/excellent-libs-snapshot-local</url>
     </snapshotRepository>
   </distributionManagement>
 
