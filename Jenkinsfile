@@ -14,7 +14,7 @@ pipeline {
             withMaven(globalMavenSettingsConfig: '87ddb0c3-60b0-474b-a867-ce0c6404df8c', maven: 'maven3', publisherStrategy: 'EXPLICIT') {
                 sh 'mvn clean deploy'
             }    
-        }s
+        }
       }
     }
   }
